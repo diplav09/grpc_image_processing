@@ -1,9 +1,7 @@
-# message NLImage {
-#     bool color = 1;
-#     bytes data = 2;
-#     int32 width = 3;
-#     int32 height = 4;
-# }
+"""
+Author : Diplav
+utility function used in client.py and server.py 
+"""
 
 from PIL import Image, ImageChops, ImageFilter
 import image_pb2
@@ -43,11 +41,6 @@ def pil_to_NLImage(img):
         for pixel in img_rgb:
             for rgb_val in pixel:
                 img_val.append(rgb_val)
-
-        # for row in range(0, img.height):
-        #     for col in range(0, img.width):
-        #         for pixel in img.getpixel((col, row)):
-        #             img_val.append(pixel)
 
     else:
         img_grey = img.convert("L")

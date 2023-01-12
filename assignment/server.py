@@ -1,11 +1,16 @@
-
+"""
+Author : Diplav
+Server to interact with client 
+python3 server.py --host localhost --port 50051
+"""
 from concurrent import futures
 import time 
 
 import grpc
 import image_pb2
 import image_pb2_grpc
-from utils import load_NLImage,save_image, nlimage_to_pil,pil_to_NLImage, compute_mean_image
+import argparse
+from utils import nlimage_to_pil,pil_to_NLImage, compute_mean_image
 
 class NLImageServiceServicer(image_pb2_grpc.NLImageServiceServicer):
     def RotateImage(self, request, context):
@@ -13,11 +18,8 @@ class NLImageServiceServicer(image_pb2_grpc.NLImageServiceServicer):
         rotation_degree = request.rotation * 90
         
         pil_img = nlimage_to_pil(request.image.data, request.image.width, request.image.height, request.image.color)
-        save_image(pil_img,'./pre_rot_server.png')
         rotated_pil = pil_img.rotate(angle=rotation_degree)
-        save_image(rotated_pil,'./post_rot_server.png')
         rotated_nlimage = pil_to_NLImage(rotated_pil)
-        # return rotated_nlimage
         return rotated_nlimage
     
     def MeanFilter(self, request, context):
@@ -26,16 +28,22 @@ class NLImageServiceServicer(image_pb2_grpc.NLImageServiceServicer):
         return mean_nlimage
 
 
-def serve():
+def serve(args):
+    host = args.host
+    server_port = args.port
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=2))
     image_pb2_grpc.add_NLImageServiceServicer_to_server(NLImageServiceServicer(),server)
-    server.add_insecure_port("localhost:50051")
+    server.add_insecure_port('{}:{}'.format(host, server_port))
     server.start()
     server.wait_for_termination()
 
 
 if __name__ == "__main__":
-    serve()
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--host',type=str,default='localhost')
+    parser.add_argument('--port',type=str,default='50051')
+    args = parser.parse_args()
+    serve(args)
 
 
 

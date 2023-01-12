@@ -1,3 +1,8 @@
+"""
+Author : Diplav
+Client to connect to server.
+"""
+
 import image_pb2_grpc
 import image_pb2
 from utils import load_NLImage,save_image, nlimage_to_pil
