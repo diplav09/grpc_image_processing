@@ -1,10 +1,10 @@
 # gRPC Image Processing Server
 
-This Grpc python server provides two microservice 
+This Grpc python server provides two API's 
 ##### 1. Image Rotate Request
         Rotates the input image in multiple of 90 degree based on input argument.
 ##### 2. Mean Filter
-        Computes and return the mean image for given input image.
+        Computes and return the mean image for given input image. Took upperbound while computing mean value for pixel.
 
 
 
@@ -68,7 +68,7 @@ run on the input image  <br/>
 
 ### 5. Concerns
 
-Both the microservices deals with image data and uses Unary RPCs where the client sends 
+Both the API's deals with image data and uses Unary RPCs where the client sends 
 a single request to the server and gets a single response back, just like a normal function call. 
 1. This limits the amount of data that can be transferred and thus limit the operation speed.
 2. Unary RPCs can be useful for smaller payloads, but for images, where data is frequently greater 

@@ -101,6 +101,34 @@ def compute_mean_array(np_img):
 #     nil_mean_image = pil_to_NLImage(Image.fromarray(np_mean_img))
 #     return nil_mean_image
 
+def handleboundary_condition(orig,blur):
+    """
+    Handle the boundary pixel value
+    Arguments:
+        - orig (np.array) :       Original Image
+        - blur (np.array) :       Blur Image
+    Returns:
+        blur   (np.array) :       Blur Image with correct boundary pixel value
+    """
+    if(orig.shape[0]< 2 or orig.shape[1] < 2):
+        return blur
+    last_row = orig.shape[0]-1
+    last_col = orig.shape[1]-1
+    #manipulating first and last row values
+    for y in range(orig.shape[1]):
+        y_min = max(y-1,0)
+        y_max = min(y+1,orig.shape[1]-1)+1
+        blur[0,y] = orig[0:2,y_min:y_max].mean(axis=(0,1))
+        blur[last_row,y] = orig[last_row-1:last_row+1,y_min:y_max].mean(axis=(0,1))
+    #manipulating first and last column values
+    for x in range(orig.shape[0]):
+        x_min = max(x-1,0)
+        x_max = min(x+1,orig.shape[0]-1)+1
+        blur[x,0] = orig[x_min:x_max,0:2].mean(axis=(0,1))
+        blur[x,last_col] = orig[x_min:x_max,last_col-1:last_col+1].mean(axis=(0,1))
+    return blur
+
+    
 def compute_mean_image(image_data,image_width, image_height, image_color):
     """
     Compute Mean NLImage
@@ -114,7 +142,10 @@ def compute_mean_image(image_data,image_width, image_height, image_color):
     """
     pil_img = nlimage_to_pil(image_data,image_width, image_height, image_color)
     blur_pil = pil_img.filter(ImageFilter.BoxBlur(1))
-    nil_mean_image = pil_to_NLImage(blur_pil)
+    np_pil = np.array(pil_img,dtype=np.uint8)
+    np_blur = np.array(blur_pil,dtype = np.uint8)
+    np_blur = handleboundary_condition(np_pil,np_blur)
+    nil_mean_image = pil_to_NLImage(Image.fromarray(np_blur))
     return nil_mean_image
 
 
