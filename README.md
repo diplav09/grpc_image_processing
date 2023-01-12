@@ -77,9 +77,14 @@ and so basic unary requests to upload images on a backend framework are unreliab
 
 ### 6. Improvement 
 1. Streaming RPC can be a alternative way which we can use larger image files. It transfer larger file 
-in smaller bits called chunk. Chunking serves two useful purpose 
-a) reduce the maximum amount of memory required to process each message
-b) provide a boundary for recovering partial uploads.
+in smaller bits called chunk. Chunking serves two useful purpose </br>
+a) reduce the maximum amount of memory required to process each message <br/>
+b) provide a boundary for recovering partial uploads. <br/>
+2. Unit test can be added to further improve the code quality.
+3. We can stress test the server code to figure out the throughput of this service and also if it’s CPU and/or MEM intensive
+4. Scan input image in the input request for malicious content to safeguard the service from attacks.
+5. Make the service multi-process so that a single bulky request does not block other requests from getting processed. Python has an inherent bottleneck of GIL which limits parallel processing.
+6. We also need to figure out the upper bound limit on the input image size if this interface needs to have strict SLAs.
 
 
 
