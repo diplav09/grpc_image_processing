@@ -1,6 +1,7 @@
 """
 Author : Diplav
 Client to connect to server.
+python3 client.py --input ./test2.png --output ./ --rotate NINETY_DEG --mean  --host localhost --port 50051
 """
 
 import image_pb2_grpc
