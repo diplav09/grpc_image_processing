@@ -39,8 +39,11 @@ def pil_to_NLImage(img):
     if color:
         img_rgb = list(img.getdata())
         for pixel in img_rgb:
-            for rgb_val in pixel:
-                img_val.append(rgb_val)
+            try:
+                for rgb_val in pixel:
+                    img_val.append(rgb_val)
+            except:
+                raise ValueError("Input maynot represent a valid image.")
 
     else:
         img_grey = img.convert("L")
@@ -59,7 +62,10 @@ def load_NLImage(file):
     Returns:
         - img (NLImage) :       Converted NLImage
     """
-    img = Image.open(file).convert('RGB')
+    try:
+        img = Image.open(file).convert('RGB')
+    except:
+        raise ValueError("Input maynot represent a valid image")
     # save_image(img,"./init_check.png")
     return pil_to_NLImage(img)
 
