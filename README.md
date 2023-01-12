@@ -10,32 +10,36 @@ This Grpc python server provides two microservice
 
 ### 1. File contents
 
-1. server.py   -- contains code for Server to interact with client 
-2. client.py   -- contains code for Client to connect to server and make request and recieve response.
-3. utils.py    -- contains image processing utility function used in server.py and client.py
-4. setup.py    -- executable for setting up the system
-5. build.py    -- to generate image_pb2_grpc.py and image_pb2.py files
+    1. server.py   -- contains code for Server to interact with client 
+    2. client.py   -- contains code for Client to connect to server and make request and recieve response.
+    3. utils.py    -- contains image processing utility function used in server.py and client.py
+    4. setup.py    -- executable for setting up the system
+    5. build.py    -- to generate image_pb2_grpc.py and image_pb2.py files
 
 
 ### 2. Setup
 
-This setup applies for fresh Ubuntu 18.04 or Mac OS
-- Download and save the the folder at desired location
-- Python3           : ```sudo apt-get update```: **```sudo apt-get install python3```
-- Pip3              : ```sudo python3 -m pip install pip```; ```python3 -m pip install --upgrade pip```
-- requirements.txt  : ```python3 -m pip install -r requirements.txt```
+    This setup applies for fresh Ubuntu 18.04 or Mac OS
+    - Download and save the the folder at desired location
+    - Python3           : ```sudo apt-get update```;```sudo apt-get install python3```
+    - Pip3              : ```sudo python3 -m pip install pip```; ```python3 -m pip install --upgrade pip```
+    - requirements.txt  : ```python3 -m pip install -r requirements.txt```
 
-    Setup can be installed by using following executable
-    ```bash
-    ./setup
-    ```
+Setup can be installed by using following executable
+```bash
+./setup
+```
+
 ### 3. Build
-    To generate image_pb2_grpc.py and image_pb2.py run following executable
-    ```bash
-    ./build
-    ```
+To generate image_pb2_grpc.py and image_pb2.py run following executable
+```bash
+./build
+```
 
 ### 4. Instruction
+</br>
+
+#### 4.1 Server 
 To start the server run following command
 ```bash
 `./server --port <...> --host <...>`
@@ -46,6 +50,7 @@ Parameters and their default values:
 >```host```: **```localhost```** &nbsp; - &nbsp; host to connect to <br/>
 </br>
 
+#### 4.2 Client
 For client run following command
 ```bash
 `./client --port <...> --host <...> --input <...> --output <...> --rotate <...> --mean`
@@ -60,3 +65,5 @@ Parameters and their default values:
 >```mean```: **```optional```** &nbsp; - &nbsp; specifies that the mean filter should be
 run on the input image  <br/>
 </br>
+
+### 5. Discussion
