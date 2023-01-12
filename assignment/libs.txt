@@ -1,4 +1,0 @@
-pip3 install grpcio-tools 
-pip3 install Pillow
-pip3 install numpy
-pip3 install argparse
