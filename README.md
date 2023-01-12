@@ -76,7 +76,10 @@ than the normal payload, we actually require partial upload of data due to laten
 and so basic unary requests to upload images on a backend framework are unreliable. 
 
 ### 6. Improvement 
-1. Streaming RPC can be a alternative way which can be used as it allow larger data like image
-to be transfer in smaller bits called chunk. Chunk supports partial uploads and lets us monitor 
-upload progress in case we ever decide to bring this functionality to the frontend clients. 
-Additionally, chunks also consumes less memory for every request sent. 
+1. Streaming RPC can be a alternative way which we can use larger image files. It transfer larger file 
+in smaller bits called chunk. Chunking serves two useful purpose 
+a) reduce the maximum amount of memory required to process each message
+b) provide a boundary for recovering partial uploads.
+
+
+
