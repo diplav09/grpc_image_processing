@@ -19,11 +19,11 @@ This Grpc python server provides two microservice
 
 ### 2. Setup
 
-    This setup applies for fresh Ubuntu 18.04 
-    - Download and save the the folder at desired location
-    - Python3           : ```sudo apt-get update```;```sudo apt-get install python3```
-    - Pip3              : ```sudo python3 -m pip install pip```; ```python3 -m pip install --upgrade pip```
-    - requirements.txt  : ```python3 -m pip install -r requirements.txt```
+This setup applies for fresh Ubuntu 18.04 
+1. Download and save the the folder at desired location
+2. Python3           : ```sudo apt-get update```;```sudo apt-get install python3```
+3. Pip3              : ```sudo python3 -m pip install pip```; ```python3 -m pip install --upgrade pip```
+4. requirements.txt  : ```python3 -m pip install -r requirements.txt```
 
 Setup can be installed by using following executable
 ```bash
@@ -75,7 +75,7 @@ a single request to the server and gets a single response back, just like a norm
 than the normal payload, we actually require partial upload of data due to latency concerns or network problems, 
 and so basic unary requests to upload images on a backend framework are unreliable. 
 
-### 6. Improvement 
+### 6. Improvement Suggestions / Future Work
 1. Streaming RPC can be a alternative way which we can use larger image files. It transfer larger file 
 in smaller bits called chunk. Chunking serves two useful purpose </br>
 a) reduce the maximum amount of memory required to process each message <br/>

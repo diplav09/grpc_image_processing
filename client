@@ -31,24 +31,30 @@ class Rotate(Enum):
             raise ValueError()
 
 def run(args):
+    # setup a channel for gRPC communication with the server 
     host = args.host
     server_port = args.port
-    
+
     with grpc.insecure_channel('{}:{}'.format(host, server_port)) as channel:
+        # create stub using the channel
         stub = image_pb2_grpc.NLImageServiceStub(channel)
         print("Make unary call")
+        # read input image which we want to transform
         file = args.input
         output_folder = args.output
         file_name = file.split('/')[-1]
         img = load_NLImage(file)
         print("Is color image = ",img.color)
         print("rotate = ",args.rotate.value)
+        # send request to server to rotate the image and wait for reply 
         reply = stub.RotateImage(image_pb2.NLImageRotateRequest(rotation=args.rotate.value,image=img))
         print("Mean Computed = ",args.mean)
+        # send request to server to compute mean Image and wait for reply
         if args.mean:
             reply = stub.MeanFilter(reply)
         pil_img = nlimage_to_pil(reply.data, reply.width, reply.height, reply.color)
         out_file = "processed_" + file_name
+        # save the output image at destination folder
         save_image(pil_img, os.path.join(output_folder,out_file))
 
 if __name__ == "__main__":

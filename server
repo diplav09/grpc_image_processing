@@ -2,7 +2,7 @@
 """
 Author : Diplav
 Server to interact with client 
-python3 server.py --host localhost --port 50051
+./server --host localhost --port 50051
 """
 from concurrent import futures
 import time 
@@ -17,23 +17,29 @@ class NLImageServiceServicer(image_pb2_grpc.NLImageServiceServicer):
     def RotateImage(self, request, context):
         print("Request to rotate image")
         rotation_degree = request.rotation * 90
-        
+        # convert image to PIL format
         pil_img = nlimage_to_pil(request.image.data, request.image.width, request.image.height, request.image.color)
+        # rotate the input according to input degree
         rotated_pil = pil_img.rotate(angle=rotation_degree)
+        # convert the image back into NLImage format
         rotated_nlimage = pil_to_NLImage(rotated_pil)
         return rotated_nlimage
     
     def MeanFilter(self, request, context):
         print("Request to compute mean image")
+        # compute the mean image
         mean_nlimage = compute_mean_image(request.data, request.width, request.height, request.color)
         return mean_nlimage
 
 
 def serve(args):
+    # create server 
     host = args.host
     server_port = args.port
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=2))
+    # assign the server with NLImageServiceServicer which we want it to execute
     image_pb2_grpc.add_NLImageServiceServicer_to_server(NLImageServiceServicer(),server)
+    # add server at specified host and port
     server.add_insecure_port('{}:{}'.format(host, server_port))
     server.start()
     server.wait_for_termination()
