@@ -68,15 +68,15 @@ run on the input image  <br/>
 
 ### 5. Concerns
 
-Both the microservices deals with image data and uses Unary RPCs where the client sends <br/>
-a single request to the server and gets a single response back, just like a normal function call. <br/>
-1. This limits the amount of data that can be transferred and thus limit the operation speed.<br/>
-2. Unary RPCs can be useful for smaller payloads, but for images, where data is frequently greater <br/>
-than the normal payload, we actually require partial upload of data due to latency concerns or network problems, <br/>
-and so basic unary requests to upload images on a backend framework are unreliable. <br/>
+Both the microservices deals with image data and uses Unary RPCs where the client sends 
+a single request to the server and gets a single response back, just like a normal function call. 
+1. This limits the amount of data that can be transferred and thus limit the operation speed.
+2. Unary RPCs can be useful for smaller payloads, but for images, where data is frequently greater 
+than the normal payload, we actually require partial upload of data due to latency concerns or network problems, 
+and so basic unary requests to upload images on a backend framework are unreliable. 
 
 ### 6. Improvement 
-1. Streaming RPC can be a alternative way which can be used as it allow larger data like image <br/>
-to be transfer in smaller bits called chunk. Chunk supports partial uploads and lets us monitor <br/>
-upload progress in case we ever decide to bring this functionality to the frontend clients. <br/>
-Additionally, chunks also consumes less memory for every request sent. <br/>
+1. Streaming RPC can be a alternative way which can be used as it allow larger data like image
+to be transfer in smaller bits called chunk. Chunk supports partial uploads and lets us monitor 
+upload progress in case we ever decide to bring this functionality to the frontend clients. 
+Additionally, chunks also consumes less memory for every request sent. 
